@@ -1,0 +1,19 @@
+﻿<div class="card text-black" style="width: 18rem;">
+    <div class="card-header">
+        <h3>@Name</h3>
+    </div>
+    <div class="card-body">
+        <span>Description:</span>
+        <p>@Notes</p>
+        <p>@Date</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = "Default title";
+    [Parameter]
+    public string Date { get; set; } = "Default date";
+
+    string Notes = "Duis mollit nostrud proident magna pariatur esse quis est cillum. Veniam nostrud duis minim tempor. Reprehenderit et non id anim voluptate eu.";
+}

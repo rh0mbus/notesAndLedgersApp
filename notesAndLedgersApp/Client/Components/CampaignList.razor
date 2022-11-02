@@ -1,0 +1,14 @@
+﻿<h3>CampaignList</h3>
+@foreach (var campaign in campaigns)
+{
+    <CampaignCard Name=@campaign.Name/>
+}
+
+@code {
+    List<Campaign> campaigns = new List<Campaign>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        campaigns.Add(new Campaign { Id = 0, Name = "Rime of the Frostmaiden", StartDate = DateTime.Now });
+    }
+}
