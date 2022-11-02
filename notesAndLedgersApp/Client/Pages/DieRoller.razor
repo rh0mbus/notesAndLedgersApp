@@ -5,44 +5,28 @@
 
 <h1>Go for it!</h1>
 
-@if(rollType == RollType.Standard){
-    <p role="status">Current roll: @currentRoll</p>
+@if(RollType == RollType.Standard){
+    <p role="status">Current roll: @CurrentRoll</p>
 }
 else {
-    <p role="status">Current roll: @currentRoll</p>
-    <p role="status">Low roll: @lowRoll</p>
-    <p role="status">High roll: @currentRoll</p>
+    if(RollType == RollType.Disadvantage)
+    {
+        <p role="status">Current roll: @CurrentRoll</p>
+        <p role="status">Low roll: @CurrentRoll</p>
+        <p role="status">High roll: @OtherRoll</p>
+    }
+    else
+    {
+        <p role="status">Current roll: @CurrentRoll</p>
+        <p role="status">Low roll: @OtherRoll</p>
+        <p role="status">High roll: @CurrentRoll</p>
+    }
 }
 
 <button class="btn btn-primary" @onclick="RollDie">Roll a d20!</button>
 <button class="btn btn-primary" @onclick="RollAdvantage">Roll with advantage!</button>
-@*<button class="btn btn-primary" @onclick="RollAdvantage">Roll with disadvantage!</button>*@
+<button class="btn btn-primary" @onclick="RollDisadvantage">Roll with disadvantage!</button>
 
 @code {
-    RollType rollType = RollType.Standard;
-    int currentRoll = 0;
-    int lowRoll = 0;
 
-    Random rand = new Random();
-
-    private void RollDie()
-    {
-        rollType = RollType.Standard;
-        currentRoll = rand.Next(20) + 1;
-    }
-
-    private void RollAdvantage()
-    {
-        rollType = RollType.Advantage;
-        var roll1 = rand.Next(20) + 1;
-        var roll2 = rand.Next(20) + 1;
-
-        currentRoll = roll1 > roll2? roll1 : roll2;;
-        lowRoll = roll1 > roll2 ? roll2 : roll1;
-    }
-
-    private void RollDisadvantage()
-    {
-
-    }
 }
