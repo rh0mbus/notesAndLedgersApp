@@ -1,0 +1,39 @@
+﻿@page "/interop"
+@inject IJSRuntime JsRuntime
+
+<h3>JS Interop Placeholders</h3>
+<input @bind="strInput" placeholder="Enter some text" @ref=inputFieldToFocus />
+
+<button class="btn btn-success" @onclick="() => ShowAlert(strInput)">Show String</button>
+<button class="btn btn-success" @onclick="() => PrintSomething(strInput)">Debug</button>
+<button class="btn btn-warning" @onclick="Focus">Try focus input</button>
+
+@code {
+
+    // Placeholder for JS utils
+
+    protected string strInput = string.Empty;
+    protected string response = string.Empty;
+
+    ElementReference inputFieldToFocus;
+    protected async Task Focus()
+    {
+        await JsRuntime.InvokeVoidAsync("focusElement", inputFieldToFocus);
+    }
+
+    protected async Task ShowAlert(string alert)
+    {
+        await JsRuntime.InvokeVoidAsync(alert);
+    }
+
+    protected async Task PrintSomething(string str)
+    {
+        await JsRuntime.InvokeVoidAsync("sayHello", strInput);
+    }
+
+    protected async Task ReturnSomething(string text)
+    {
+        response = await JsRuntime.InvokeAsync<string>("returnFunction");
+        await PrintSomething(response);
+    }
+}
