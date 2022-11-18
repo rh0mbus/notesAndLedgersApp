@@ -11,5 +11,7 @@ namespace notesAndLedgersApp.Server.Data
         }
 
         public DbSet<Campaign> Campaigns { get; set; }
+
+        public DbSet<Session> Sessions { get; set; }
     }
 }

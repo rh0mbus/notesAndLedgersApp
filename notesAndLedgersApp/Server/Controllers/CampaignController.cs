@@ -33,17 +33,20 @@ namespace notesAndLedgersApp.Server.Controllers
 
             _context.Campaigns.Add(campaign);
             await _context.SaveChangesAsync();
-            return Ok(campaign);
+            return Ok(await GetCampaigns());
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCampaign(Campaign campaign)
         {
-            var campaignToUpdate = await _context.Campaigns.FirstOrDefaultAsync(c => c.Id == campaign.Id);
-            if (campaignToUpdate == null)
+            var dbCampaign = await _context.Campaigns.FirstOrDefaultAsync(c => c.Id == campaign.Id);
+            if (dbCampaign == null)
                 return NotFound($"No campaign found with id {campaign.Id}");
 
-            return Ok("Campaign updated");
+            dbCampaign.Name = campaign.Name;
+            dbCampaign.Description = campaign.Description;
+            await _context.SaveChangesAsync();
+            return Ok(GetCampaigns());
         }
 
         [HttpDelete]
@@ -56,7 +59,7 @@ namespace notesAndLedgersApp.Server.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok($"Campaign deleted ID: {id}");
+            return Ok(GetCampaigns());
         }
 
     }
