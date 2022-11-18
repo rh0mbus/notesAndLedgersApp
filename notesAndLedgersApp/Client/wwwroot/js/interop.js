@@ -2,7 +2,7 @@
     alert(str);
 }
 
-function sayHello(str) {
+function Log(str) {
     console.log(str);
 }
 

@@ -1,19 +1,36 @@
-﻿<div class="card text-black" style="width: 18rem;">
+﻿@inject IJSRuntime JsRuntime
+
+<div class="card text-black" style="width: 18rem;">
     <div class="card-header">
         <h3>@Name</h3>
     </div>
     <div class="card-body">
         <span>Description:</span>
-        <p>@Notes</p>
-        <p>@Date</p>
+        <p>@Description</p>
+        <span class="oi fw-bold">Start Date: </span> @Date
+        <NavLink style="color: black" href=@navLocation>Go to campaign</NavLink>
     </div>
 </div>
 
 @code {
     [Parameter]
+    public int Id { get; set; }
+    [Parameter]
     public string Name { get; set; } = "Default title";
     [Parameter]
     public string Date { get; set; } = "Default date";
+    [Parameter]
+    public string Description { get; set; } = string.Empty;
 
-    string Notes = "Duis mollit nostrud proident magna pariatur esse quis est cillum. Veniam nostrud duis minim tempor. Reprehenderit et non id anim voluptate eu.";
+    string navLocation = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        navLocation = $"/campaign/{Id}";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        JsRuntime.InvokeVoidAsync("Log", navLocation);
+    }
 }
