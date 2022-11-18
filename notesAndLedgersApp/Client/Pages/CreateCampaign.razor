@@ -1,0 +1,30 @@
+﻿@page "/createCampaign"
+@inject ICampaignService campaignService
+
+<PageTitle>Create Campaign</PageTitle>
+<h3>Create Campaign</h3>
+
+<EditForm Model="campaign" OnValidSubmit="HandleSubmit">
+    <div class="container">
+        <div class="row-sm-5">
+            <label for="campaignName">Campaign Name</label>
+            <InputText id="campaignName" @bind-Value="campaign.Name" class="form-control"></InputText>
+        </div>
+        <div class="row-sm-5">
+            <label for="description">Description</label>
+            <InputTextArea @bind-Value=campaign.Description />
+        </div>
+        <button type="submit" class="btn-primary">Create</button>
+    </div>
+
+</EditForm>
+
+@code {
+
+    Campaign campaign = new Campaign();
+
+    async Task HandleSubmit()
+    {
+        await campaignService.CreateCampaign(campaign);
+    }
+}

@@ -1,14 +1,40 @@
-﻿<h3>CampaignList</h3>
-@foreach (var campaign in campaigns)
+﻿@inject ICampaignService CampaignService
+@inject NavigationManager Navigation
+
+<h3>Campaign List</h3>
+
+@if(campaigns.Count() == 0)
 {
-    <CampaignCard Name=@campaign.Name/>
+    <span>It looks as though you don't have any campaigns...</span>
 }
+else 
+{
+    @foreach (var campaign in campaigns)
+    {
+
+        <CampaignCard Id=@campaign.Id
+            Name=@campaign.Name
+            Date=@campaign.StartDate.ToString()
+            Description=@campaign.Description
+        />
+    }
+}
+
+<div class="container-sm" >
+    <button class="btn btn-primary" @onclick="CreateCampaign">Create Campaign</button>
+</div>
 
 @code {
     List<Campaign> campaigns = new List<Campaign>();
 
     protected override async Task OnInitializedAsync()
     {
-        campaigns.Add(new Campaign { Id = 0, Name = "Rime of the Frostmaiden", StartDate = DateTime.Now });
+        await CampaignService.GetCampaigns();
+        campaigns = CampaignService.Campaigns;
+    }
+
+    void CreateCampaign()
+    {
+        Navigation.NavigateTo("/createCampaign");
     }
 }

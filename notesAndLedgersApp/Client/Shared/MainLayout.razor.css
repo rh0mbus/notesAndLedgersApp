@@ -9,11 +9,11 @@ main {
 }
 
 .sidebar {
-    background: radial-gradient(circle, rgba(42,0,77,1) 0%, rgba(111,0,204,1) 0%, rgba(42,0,77,1) 98%);
+    background: #212529;
 }
 
 .top-row {
-    background-color: #024A36;
+    background-color: #212529;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
     height: 3.5rem;

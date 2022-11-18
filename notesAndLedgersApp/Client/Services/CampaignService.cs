@@ -5,24 +5,14 @@ namespace notesAndLedgersApp.Client.Services
 {
     public class CampaignService : ICampaignService
     {
+        public Campaign CurrentCampaign { get; set; } = new Campaign();
         public List<Campaign> Campaigns { get; set; } = new List<Campaign>();
 
         private HttpClient _http;
 
         public CampaignService(HttpClient http)
         {
-            Campaigns = new List<Campaign>();
             _http = http;
-        }
-
-        public Task CreateCampaign(Campaign campaign)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteCampaign(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task GetCampaigns()
@@ -32,9 +22,26 @@ namespace notesAndLedgersApp.Client.Services
                 Campaigns = result;
         }
 
-        public Task UpdateCampaign(int id)
+        public async Task GetCampaign(int id)
         {
-            throw new NotImplementedException();
+            var result = await _http.GetFromJsonAsync<Campaign>($"/api/campaign/{id}");
+            if (result != null)
+                CurrentCampaign = result;
+        }
+
+        public async Task CreateCampaign(Campaign campaign)
+        {
+            var result = await _http.PostAsJsonAsync("api/campaign", campaign);
+        }
+
+        public async Task UpdateCampaign(Campaign campaign)
+        {
+            var result = await _http.PutAsJsonAsync("api/campaign", campaign);
+        }
+
+        public async Task DeleteCampaign(int id)
+        {
+            var result = await _http.DeleteAsync($"api/campaign/{id}");
         }
     }
 }

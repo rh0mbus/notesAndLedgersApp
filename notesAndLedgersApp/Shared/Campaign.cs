@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace notesAndLedgersApp.Shared
+﻿namespace notesAndLedgersApp.Shared
 {
     public class Campaign
     {
@@ -14,5 +8,6 @@ namespace notesAndLedgersApp.Shared
         public Character? Character { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string? Description { get; set; }
     }
 }

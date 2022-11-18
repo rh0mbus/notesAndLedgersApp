@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using notesAndLedgersApp.Server.Data;
 using notesAndLedgersApp.Shared;
 
 namespace notesAndLedgersApp.Server.Controllers
@@ -8,15 +10,53 @@ namespace notesAndLedgersApp.Server.Controllers
     [ApiController]
     public class CampaignController : ControllerBase
     {
-        List<Session> sessions = new List<Session> {
-            new Session { Id = 0, SessionName = "Siege of Locust Valley", SessionDate = DateTime.Now, SessionComments = "Lots of combat!"  },
-            new Session { Id = 1, SessionName = "A Night at the Inn", SessionDate = DateTime.Now, SessionComments = "Lots of combat!" },
-        };
+        List<Campaign> Campaigns = new List<Campaign>();
+        private DataContext _context;
+
+        public CampaignController(DataContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-        public async Task<IActionResult> GetSessions()
+        public async Task<IActionResult> GetCampaigns()
         {
-            return Ok(sessions);
+            Campaigns = _context.Campaigns.ToList();
+            return Ok(Campaigns);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCampaign(Campaign campaign)
+        {
+            campaign.StartDate = DateTime.Now;
+            campaign.Character = new Character();
+
+            _context.Campaigns.Add(campaign);
+            await _context.SaveChangesAsync();
+            return Ok(campaign);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCampaign(Campaign campaign)
+        {
+            var campaignToUpdate = await _context.Campaigns.FirstOrDefaultAsync(c => c.Id == campaign.Id);
+            if (campaignToUpdate == null)
+                return NotFound($"No campaign found with id {campaign.Id}");
+
+            return Ok("Campaign updated");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCampaign(int id)
+        {
+            var dbCampaign = await _context.Campaigns.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (dbCampaign == null) return NotFound($"Campaign with is: {id} not found!");
+            _context.Campaigns.Remove(dbCampaign);
+
+            await _context.SaveChangesAsync();
+
+            return Ok($"Campaign deleted ID: {id}");
         }
 
     }

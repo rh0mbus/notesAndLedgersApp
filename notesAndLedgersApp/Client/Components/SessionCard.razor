@@ -1,0 +1,24 @@
+﻿<div class="card text-black" style="width: 18rem; margin: 10px">
+    <div class="card-header">
+        <span>Session Name: @Name</span>
+    </div>
+    <div class="card-body">
+        <span>Session Date:@SessionDate</span>
+        <span>Number of notes:@NumberOfNotes</span>
+        <span>Starting Location:@StartingLocation</span>
+        <span>Ending Location:@StartingLocation</span>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public int NumberOfNotes { get; set; }
+    [Parameter]
+    public DateTime SessionDate { get; set; }
+    [Parameter]
+    public string StartingLocation { get; set; } 
+    [Parameter]
+    public string EndingLocation { get; set; }
+}

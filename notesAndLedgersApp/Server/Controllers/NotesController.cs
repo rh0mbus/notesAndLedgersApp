@@ -33,22 +33,22 @@ namespace notesAndLedgersApp.Server.Controllers
             return Ok(notes);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateANote(Note newNote)
-        {
-            return Ok("Note created");
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateANote(Note newNote)
+        //{
+        //    return Ok("Note created");
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateNote(int id)
-        {
-            return Ok($"Note {id} updated");
-        }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateNote(int id)
+        //{
+        //    return Ok($"Note {id} updated");
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNote(int id)
-        {
-            return Ok($"Note {id} deleted!");
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteNote(int id)
+        //{
+        //    return Ok($"Note {id} deleted!");
+        //}
     }
 }

@@ -1,0 +1,26 @@
+﻿@page "/campaign/{id:int}"
+
+@inject ICampaignService CampaignService
+
+<h3>Home for campaign with id: @Id</h3>
+
+<h4>Campaign Title: @currentCampaign.Name</h4>
+
+<div>
+    <h1 class="fw-bold">Description</h1>
+    <span>@currentCampaign.Description</span>
+</div>
+
+
+@code {
+    Campaign currentCampaign = new Campaign();
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override void OnInitialized()
+    {
+                var result = CampaignService.Campaigns.Where<Campaign>(c => c.Id == Id).First();
+        if (result != null)
+            currentCampaign = result;
+    }
+}
